@@ -52,6 +52,7 @@ try {
  *    - 如果正确上述boolean值不存在，进入下面的判断
  *    *注意：Json格式已经不一样
  *  - IsSecurityCodeTrue:验证码正确判断
+ *  - IsEmailAddressTrue: 邮箱是否唯一
  *  - IsUsernameTrue：用户名是否合法
  * --ToDo
  *   由于无法写入数据库 先使用伪数据
@@ -88,12 +89,14 @@ app.post('/api/register', async (req, res) => {
 
     let IsUsernameTrue = username==='dev'?false:true
     let IsSecurityCodeTrue = SecurityCode==='123456'?true:false
+    let IsEmailAddressTrue = EmailAddress==='12345@gmail.com'?false:true
 
     if(!IsUsernameTrue||!IsSecurityCodeTrue){
         res.status(200).send({
             IsFormValid:true,
             IsSecurityCodeTrue:IsSecurityCodeTrue,
             IsUsernameTrue:IsUsernameTrue,
+            IsEmailAddressTrue:IsEmailAddressTrue,
             msg:'用户输入信息不符合'
         })
         return
@@ -103,6 +106,7 @@ app.post('/api/register', async (req, res) => {
         IsFormValid:true,
         IsSecurityCodeTrue:IsSecurityCodeTrue,
         IsUsernameTrue:IsUsernameTrue,
+        IsEmailAddressTrue:IsEmailAddressTrue,
         msg:'注册成功'
     })
 })
