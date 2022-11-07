@@ -175,13 +175,12 @@ app.post('/api/login', async (req, res) => {
 /**
  * 忘记密码
  *  - request
- *   - EmailAddress: 邮箱地址
+ *   - EmailAddress: 邮箱地址(在邮件api中已经判断正确性，只是定位)
  *   - SecurityCode: 验证码
  *   - PasswordHash: 修改好的密码
  *  - respond:
  *   - IsSecurityCodeTrue: 验证码是否正确
- *   - IsUsernameTrue: 用户名是否正确(防止未注册使用)
- *   - IsEmailAddressValid: 邮箱是否有效
+ *   - IsPasswordTrue: 密码是否为空
  */
 app.post('/api/forgetpassword',async (req,res)=>{
     const EmailAddress  =req.body.EmailAddress
@@ -189,43 +188,37 @@ app.post('/api/forgetpassword',async (req,res)=>{
     const PasswordHash = req.body.PasswordHash
 
     /**
+     * 用邮箱找到用户
+     */
+
+    let IsSecurityCodeTrue = SecurityCode==='123456'?true:false
+    let IsPasswordTrue = PasswordHash?true:false
+
+    /**
      * 请求格式判断
      */
 
-    if(!EmailAddress||!SecurityCode||!PasswordHash){
+    if(!IsSecurityCodeTrue){
         res.status(200).send({
-            IsSecurityCodeTrue : undefined,
-            msg:'忘记密码请求格式出错'
+            IsSecurityCodeTrue : IsSecurityCodeTrue,
+            IsPasswordTrue:IsPasswordTrue,
+            msg:'验证码错误'
         })
         return
     }
 
-    /**
-     * 无法写入数据库 
-     */
-
-    // var requestedUser = User.findOne({
-    //     where:{
-    //         EmailAddress:EmailAddress
-    //     }
-    // })
-
-
-    /**
-     * 发邮箱不会
-     */
-
-
-    if(SecurityCode!=='123456'){
+    if(!IsPasswordTrue){
         res.status(200).send({
-            IsSecurityCodeTrue:false,
-            msg:'验证码不正确'
+            IsSecurityCodeTrue : IsSecurityCodeTrue,
+            IsPasswordTrue:IsPasswordTrue,
+            msg:'密码不能为空'
         })
         return
     }
 
     res.status(200).send({
-        IsSecurityCodeTrue:true,
+        IsSecurityCodeTrue : IsSecurityCodeTrue,
+        IsPasswordTrue:IsPasswordTrue,
         msg:'重置密码成功'
     })
 })
