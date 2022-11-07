@@ -229,58 +229,65 @@ app.post('/api/forgetpassword',async (req,res)=>{
 /**
  * personalinfo api:
  *   -request:
- *      - UserName:用户名
  *      - token : 检查登录状态
+ *      - UserName: 用户名
+ *      - UserGender: 用户性别
+ *      - Signature: 用户个签
+ *      - Birthday: 用户生日
+ *      - Major: 用户专业
+ *      - Grade: 用户年级
  *   - response:
  *      一个json对象返回这些信息
- *      - UserName:用户名
- *      - UserGender: 性别
- *      - Signature: 个性签名
- *      - BirthDay: 生日
- *      - Major: 专业
- *      - Grade: 年级
- *      - PhotoUrl: 头像信息
+ *      - IsModificationApplied:判断修改成功与否的boolean值
  */
-app.get('/api/personalinfo',async(req,res)=>{
+app.post('/api/personalinfo',async(req,res)=>{
     /**
      * 检查请求格式
      */
-    const username = req.body.UserName
+    const UserName = req.body.UserName
     const token = req.body.token
-
-    if(!username||!token){
-        res.status(200).send({
-            IsThisJsonValid:false,
-            msg:'个人信息请求有误'
-        })
-        return
-    }
+    const UserGender = req.body.UserGender
+    const Signature = req.body.Signature
+    const Birthday = req.body.Birthday
+    const Major = req.body.Major
+    const Grade = req.body.Grade
 
     /**
      * 数据库中查找username，比较token
      */
-
-    if(token!=='123456'){
+    
+    if(!token||token!='123456'){
         res.status(200).send({
-            IsThisJsonValid:false,
-            msg:'登录状态出错'
+            IsModificationApplied:false,
+            msg:'用户未登录'
         })
         return
     }
 
+    /**
+     * 数据库根据token更新user
+     */
+
     res.status(200).send({
-        IsThisJsonValid:true,
-        UserName:'guoanqi',
-        UserGender: 'male',
-        Signature:'wawa',
-        Birthday:'2022-11-06',
-        Major:'Computer Science',
-        Grade:'大二',
-        PhotoUrl:'./photo/temp1',
-        msg:'个人信息'
+        IsModificationApplied:true,
+        msg:'修改成功!'
     })
 
 })
+
+/**
+ * 上传图片
+ */
+import fileUpload from 'express-fileupload'
+
+app.use(fileUpload())
+
+app.post('api/uploadimage',async(req,res)=>{
+    logger.info(req.files)
+
+    res.sendStatus(200)
+})
+
 /**
  * 运行服务器
  */
