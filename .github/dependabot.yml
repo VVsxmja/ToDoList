@@ -9,7 +9,11 @@ updates:
     directory: "/ToDoList" # Location of package manifests
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "build"
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/Backend" # Location of package manifests
     schedule:
       interval: "weekly"
+    commit-message:
+      prefix: "build"
