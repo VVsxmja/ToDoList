@@ -11,7 +11,7 @@
             <div style="flex: 1 1 auto;"></div>
             <div class="auth-box-item"
                 style="width: 100%; display: flex; flex-flow: row nowrap; justify-content: space-between; align-self: flex-end;">
-                <el-button link type="primary" @click="this.$router.push('/forgetpassword')">忘记密码</el-button>
+                <el-button link type="primary" @click="this.$router.push('/resetPassword')">忘记密码</el-button>
                 <el-button link type="primary" @click="this.$router.push('/signup')">注册</el-button>
             </div>
         </div>
