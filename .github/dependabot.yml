@@ -8,12 +8,12 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/Frontend" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "build"
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/Backend" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     commit-message:
       prefix: "build"
