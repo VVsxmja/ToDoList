@@ -14,7 +14,7 @@
     "element-plus": "^2.3.8",
     "install": "^0.13.0",
     "screenfull": "^6.0.2",
-    "uuid": "^9.0.0",
+    "uuid": "^9.0.1",
     "vue": "^3.2.45",
     "vue-router": "^4.2.4"
   },
